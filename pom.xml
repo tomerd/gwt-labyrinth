@@ -62,6 +62,13 @@
 					</execution>
 				</executions>
 			</plugin>
+	        <plugin>
+	            <groupId>com.mycila.maven-license-plugin</groupId>
+	            <artifactId>maven-license-plugin</artifactId>
+	            <configuration>
+	                <header>license.txt</header>
+	            </configuration>
+	        </plugin>			
 		</plugins>
 	</build>
 
