@@ -18,6 +18,7 @@
 
 package org.simbit.gwt.labyrinth.commands;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -46,6 +47,7 @@ public abstract class Command <T> implements ICommand<T>, AsyncCallback<T>
 	public void onSuccess(T result) 
 	{	
 		//Log.fine("command " + this.toString() + " returned:\n" + result, "protocol");
+		GWT.log("command " + this.toString() + " returned:\n" + result);
 		
 		if (_setBusy)
 		{
@@ -58,6 +60,7 @@ public abstract class Command <T> implements ICommand<T>, AsyncCallback<T>
 	public void onFailure(Throwable error) 
 	{
 		//Log.warning("command " + this.toString() + " returned: " + error.getMessage(), "protocol");
+		GWT.log("command " + this.toString() + " returned: " + error.getMessage());
 		
 		if (_setBusy)
 		{

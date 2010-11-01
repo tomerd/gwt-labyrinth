@@ -32,6 +32,7 @@ import org.restlet.client.resource.ClientResource;
 import org.simbit.gwt.labyrinth.provider.rest.HttpMethod;
 import org.simbit.gwt.labyrinth.provider.rest.IRestProvider;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 
 import com.google.gwt.json.client.JSONObject;
@@ -120,6 +121,7 @@ public final class RestletRestImpl implements IRestProvider
 		catch(Exception e)
 		{
 			//Log.error("internal error performing request " + e);
+			GWT.log("internal error performing request " + e);
 		} 
 	}
 	
@@ -186,6 +188,7 @@ public final class RestletRestImpl implements IRestProvider
 				String description = "internal server error: " + (null != e.getMessage() ? e.getMessage() : e.toString());
 				_callback.onFailure(new Throwable(description));
 				//Log.error(description);
+				GWT.log(description);
 			}
 		}	
 		

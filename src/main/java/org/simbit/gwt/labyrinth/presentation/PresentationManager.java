@@ -22,12 +22,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.simbit.gwt.labyrinth.views.IEventHandler;
 import org.simbit.gwt.labyrinth.views.IViewLocator;
 import org.simbit.gwt.labyrinth.views.ViewLocator;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -37,19 +39,15 @@ public class PresentationManager
 {		
 	private static HasWidgets _contianer = null;
 	
+	private static HandlerManager _eventBus = null;
+	
 	private static Map<String, HistoryItem> _history = null;
 	
 	public static void bind(HasWidgets contianer)
 	{
 		_contianer = contianer;
 	}
-	
-	private static HasWidgets getContainer()
-	{
-		if (null == _contianer) _contianer = RootPanel.get();
-		return _contianer;
-	}
-	
+		
 	public static void navigateTo(Enum<?> viewId) 
 	{
 		navigateTo(viewId, null);
@@ -75,7 +73,8 @@ public class PresentationManager
 		}
 		catch(Exception e)
 		{
-			//Log.error("failed navigating to " + viewId + ":"  + e);
+			//Log.error("failed navigating to " + viewId + ":"  + e
+			GWT.log("failed navigating to " + viewId + ":"  + e);
 		}
 	}
 	
@@ -96,6 +95,7 @@ public class PresentationManager
 				catch (Exception e)
 				{
 					//Log.warning("failed handling history change event: " + e, "navigation");
+					GWT.log("failed handling history change event: " + e);
 				}
 			}
 		};
@@ -108,8 +108,21 @@ public class PresentationManager
 		Widget widget = locator.get(viewId);
 		if (null == viewId) throw (new Exception("view not found or no view is mapped to " + viewId + ", check views mapping."));
 		//if (widget instanceof IDataContainer) ((IDataContainer)widget).setData(data);
+		if (widget instanceof IEventHandler) ((IEventHandler)widget).setEventBus(getEventBus());
 		return widget;
 	}
+	
+	private static HasWidgets getContainer()
+	{
+		if (null == _contianer) _contianer = RootPanel.get();
+		return _contianer;
+	}
+	
+	private static HandlerManager getEventBus()
+	{
+		if (null == _eventBus) _eventBus = new HandlerManager(null);
+		return _eventBus;
+	}	
 	
 	private static void setCurrentWidget(Widget widget)
 	{				

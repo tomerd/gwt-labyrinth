@@ -25,20 +25,20 @@ public final class CommandUtil
 {			
 	public static <T> void send(Enum<?> commandId, AsyncCallback<T> callback)
 	{		
-		send(commandId, callback, null, true);	
+		send(commandId, null, true, callback);	
 	}
 	
 	public static <T> void send(Enum<?> commandId, AsyncCallback<T> callback, boolean setBusy)
 	{		
-		send(commandId, callback, null, setBusy);	
+		send(commandId, null, setBusy, callback);	
 	}	
 	
-	public static <T> void send(Enum<?> commandId, AsyncCallback<T> callback, Object data)
+	public static <T> void send(Enum<?> commandId, Object data, AsyncCallback<T> callback)
 	{
-		send(commandId, callback, data, true);
+		send(commandId, data, true, callback);
 	}
 	
-	public static <T> void send(Enum<?> commandId, AsyncCallback<T> callback, Object data, boolean setBusy)
+	public static <T> void send(Enum<?> commandId, Object data, boolean setBusy, AsyncCallback<T> callback)
 	{
 		try
 		{
@@ -51,6 +51,7 @@ public final class CommandUtil
 		catch (Exception e)
 		{
 			//Log.error("error invoking commnd " + commandId + ", " + e);
+			GWT.log("error invoking commnd " + commandId + ", " + e);
 		}
 	}
 }
