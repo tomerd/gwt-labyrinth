@@ -57,7 +57,7 @@ public class PresentationManager
 		}
 		catch(Exception e)
 		{
-			System.console().printf("failed navigating to " + viewId + ":"  + e);
+			//Log.error("failed navigating to " + viewId + ":"  + e);
 		}
 	}
 	
@@ -78,7 +78,6 @@ public class PresentationManager
 				catch (Exception e)
 				{
 					//Log.warning("failed handling history change event: " + e, "navigation");
-					System.console().printf("failed handling history change event: " + e);
 				}
 			}
 		};

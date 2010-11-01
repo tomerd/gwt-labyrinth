@@ -11,6 +11,13 @@
 	<name>gwt-labyrinth</name>
 	<inceptionYear>2010</inceptionYear>
 	
+	<properties>		
+		<gwt.version>2.0.4</gwt.version>
+		<restlet.version>2.0.0</restlet.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
+	</properties>
+		
 	<repositories>
 		<repository>
 			<id>maven-restlet</id>

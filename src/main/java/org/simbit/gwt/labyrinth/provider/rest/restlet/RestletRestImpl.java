@@ -101,7 +101,7 @@ public final class RestletRestImpl implements IRestProvider
 		}
 		catch(Exception e)
 		{
-			System.console().printf("internal error performing request " + e);
+			//Log.error("internal error performing request " + e);
 		} 
 	}
 	
@@ -145,7 +145,6 @@ public final class RestletRestImpl implements IRestProvider
 			_callback = callback;
 		}
 		
-		// FIMXE: clean up the rawtype handling and the response to callback mapping
 		public void handle(Request request, Response response)
 		{
 			if (null == _callback) return;
@@ -168,7 +167,7 @@ public final class RestletRestImpl implements IRestProvider
 			{
 				String description = "internal server error: " + (null != e.getMessage() ? e.getMessage() : e.toString());
 				_callback.onFailure(new Throwable(description));
-				System.console().printf(description);
+				//Log.error(description);
 			}
 		}	
 		

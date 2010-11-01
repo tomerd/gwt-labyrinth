@@ -32,7 +32,7 @@ public final class CommandUtil
 		}
 		catch (Exception e)
 		{
-			System.console().printf("error invoking commnd " + commandId + ", " + e);
+			//Log.error("error invoking commnd " + commandId + ", " + e);
 		}
 	}
 }
