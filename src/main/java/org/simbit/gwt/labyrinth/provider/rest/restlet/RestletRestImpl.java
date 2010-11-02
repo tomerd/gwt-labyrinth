@@ -35,6 +35,7 @@ import org.simbit.gwt.labyrinth.provider.rest.IRestProvider;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -120,8 +121,7 @@ public final class RestletRestImpl implements IRestProvider
 		}
 		catch(Exception e)
 		{
-			//Log.error("internal error performing request " + e);
-			GWT.log("internal error performing request " + e);
+			Log.severe("internal error performing request " + e, "protocol");
 		} 
 	}
 	

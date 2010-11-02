@@ -19,26 +19,27 @@
 package org.simbit.gwt.labyrinth.commands;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public final class CommandUtil 
+public final class CommandDispatcher
 {			
-	public static <T> void send(Enum<?> commandId, AsyncCallback<T> callback)
+	public static <T> void dispatch(Enum<?> commandId, AsyncCallback<T> callback)
 	{		
-		send(commandId, null, true, callback);	
+		dispatch(commandId, null, true, callback);	
 	}
 	
-	public static <T> void send(Enum<?> commandId, AsyncCallback<T> callback, boolean setBusy)
+	public static <T> void dispatch(Enum<?> commandId, AsyncCallback<T> callback, boolean setBusy)
 	{		
-		send(commandId, null, setBusy, callback);	
+		dispatch(commandId, null, setBusy, callback);	
 	}	
 	
-	public static <T> void send(Enum<?> commandId, Object data, AsyncCallback<T> callback)
+	public static <T> void dispatch(Enum<?> commandId, Object data, AsyncCallback<T> callback)
 	{
-		send(commandId, data, true, callback);
+		dispatch(commandId, data, true, callback);
 	}
 	
-	public static <T> void send(Enum<?> commandId, Object data, boolean setBusy, AsyncCallback<T> callback)
+	public static <T> void dispatch(Enum<?> commandId, Object data, boolean setBusy, AsyncCallback<T> callback)
 	{
 		try
 		{
@@ -50,8 +51,7 @@ public final class CommandUtil
 		}
 		catch (Exception e)
 		{
-			//Log.error("error invoking commnd " + commandId + ", " + e);
-			GWT.log("error invoking commnd " + commandId + ", " + e);
+			Log.severe("error invoking commnd " + commandId + ", " + e);
 		}
 	}
 }

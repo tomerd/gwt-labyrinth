@@ -5,6 +5,7 @@
 	<inherits name="com.google.gwt.json.JSON" />
 	<inherits name='com.google.gwt.jsonp.Jsonp' />
 	<inherits name="com.google.gwt.user.User" />
+	<inherits name="com.google.gwt.gen2.logging.Logging" />
 	<inherits name="org.restlet.Restlet" />
 	<inherits name="org.restlet.JSON" />
 	<inherits name="org.restlet.XML" />  

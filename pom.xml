@@ -13,6 +13,7 @@
 	
 	<properties>		
 		<gwt.version>2.0.4</gwt.version>
+		<gwt.incubator.version>2.0.1</gwt.incubator.version>		
 		<restlet.version>2.0.0</restlet.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
@@ -34,10 +35,25 @@
 			<scope>provided</scope>			
 		</dependency>
 		<dependency>
-			<groupId>org.restlet.jse</groupId>
+			<groupId>com.google.gwt</groupId>
+			<artifactId>gwt-incubator</artifactId>
+			<version>${gwt.incubator.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.restlet.gwt</groupId>
 			<artifactId>org.restlet</artifactId>
 			<version>${restlet.version}</version>
-		</dependency>						
+		</dependency>
+		<dependency>
+			<groupId>org.restlet.gwt</groupId>
+			<artifactId>org.restlet.ext.json</artifactId>
+			<version>${restlet.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.restlet.gwt</groupId>
+			<artifactId>org.restlet.ext.xml</artifactId>
+			<version>${restlet.version}</version>
+		</dependency>		
 	</dependencies>
   	
 	<build>
@@ -51,6 +67,14 @@
       		</resource>
     	</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>		
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>gwt-maven-plugin</artifactId>
