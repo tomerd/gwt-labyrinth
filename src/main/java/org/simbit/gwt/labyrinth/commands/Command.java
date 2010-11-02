@@ -57,17 +57,17 @@ public abstract class Command <T> implements ICommand<T>, AsyncCallback<T>
 		if (null != _callback) _callback.onSuccess(result);
 	}
 	
-	public void onFailure(Throwable error) 
+	public void onFailure(Throwable caught) 
 	{
 		//Log.warning("command " + this.toString() + " returned: " + error.getMessage(), "protocol");
-		GWT.log("command " + this.toString() + " returned: " + error.getMessage());
+		GWT.log("command " + this.toString() + " returned: " + caught.getMessage());
 		
 		if (_setBusy)
 		{
 			DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "default");
 		}
 		
-		if (null != _callback) _callback.onFailure(error);
+		if (null != _callback) _callback.onFailure(caught);
 	}
 	
 	protected final Object getDataElement(Object data, String name)

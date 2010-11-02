@@ -185,10 +185,9 @@ public final class RestletRestImpl implements IRestProvider
 			}
 			catch (Exception e)
 			{
-				String description = "internal server error: " + (null != e.getMessage() ? e.getMessage() : e.toString());
-				_callback.onFailure(new Throwable(description));
+				_callback.onFailure(e);
 				//Log.error(description);
-				GWT.log(description);
+				GWT.log("internal server error: " + (null != e.getMessage() ? e.getMessage() : e.toString()));
 			}
 		}	
 		
@@ -234,9 +233,9 @@ public final class RestletRestImpl implements IRestProvider
 				callback.onSuccess(new JSONObject(response));
 			}
 			
-			public void onFailure(Throwable error) 
+			public void onFailure(Throwable caught) 
 			{
-				callback.onFailure(error);
+				callback.onFailure(caught);
 			}
 		});
 	}

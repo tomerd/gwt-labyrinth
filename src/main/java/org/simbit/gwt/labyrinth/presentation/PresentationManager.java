@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.simbit.gwt.labyrinth.views.IDataContainer;
 import org.simbit.gwt.labyrinth.views.IEventHandler;
 import org.simbit.gwt.labyrinth.views.IViewLocator;
 import org.simbit.gwt.labyrinth.views.ViewLocator;
@@ -107,7 +108,7 @@ public class PresentationManager
 		IViewLocator locator = GWT.create(ViewLocator.class);
 		Widget widget = locator.get(viewId);
 		if (null == viewId) throw (new Exception("view not found or no view is mapped to " + viewId + ", check views mapping."));
-		//if (widget instanceof IDataContainer) ((IDataContainer)widget).setData(data);
+		if (widget instanceof IDataContainer) ((IDataContainer)widget).setData(data);
 		if (widget instanceof IEventHandler) ((IEventHandler)widget).setEventBus(getEventBus());
 		return widget;
 	}
