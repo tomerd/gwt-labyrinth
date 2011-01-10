@@ -18,28 +18,32 @@
 
 package org.simbit.gwt.labyrinth.provider.rest.restlet;
 
+/*
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
 import org.restlet.client.Request;
 import org.restlet.client.Response;
 import org.restlet.client.Uniform;
 import org.restlet.client.data.Form;
 import org.restlet.client.data.MediaType;
+import org.restlet.client.data.Parameter;
 import org.restlet.client.ext.json.JsonRepresentation;
 import org.restlet.client.ext.xml.DomRepresentation;
 import org.restlet.client.representation.EmptyRepresentation;
 import org.restlet.client.representation.Representation;
 import org.restlet.client.representation.StringRepresentation;
 import org.restlet.client.resource.ClientResource;
+*/
 import org.simbit.gwt.labyrinth.provider.rest.HttpMethod;
 import org.simbit.gwt.labyrinth.provider.rest.IRestProvider;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 
-import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.jsonp.client.JsonpRequestBuilder;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.xml.client.Document;
+//import com.google.gwt.xml.client.Document;
 
 public final class RestletRestImpl implements IRestProvider
 {
@@ -79,7 +83,8 @@ public final class RestletRestImpl implements IRestProvider
 	}	
 		
 	public <T> void send(String url, AsyncCallback<T> callback, HttpMethod method, Object data)
-	{								
+	{							
+		/*
 		if (null == url) return;
 		
 		// common sense defaults
@@ -121,41 +126,61 @@ public final class RestletRestImpl implements IRestProvider
 		}
 		catch(Exception e)
 		{
-			Log.severe("internal error performing request " + e, "protocol");
+			Logger.getLogger(this.getClass().getName()).severe("internal error performing request " + e);
 		} 
+		*/
 	}
 	
+	/*	
 	// FIXME, seems like restlet is not doing this properly, so hacking around it
 	private Representation dataToRepresetation(Object data)
 	{
 		if (data instanceof String)
 		{
 			// TODO: test this scenario			
-			return (new StringRepresentation((String)data));
+			return new StringRepresentation((String)data);
 		}
-		else if (data instanceof Form)
+		else if (data instanceof String[][])
 		{
-			return (((Form)data).getWebRepresentation());
+			Form form = buildForm((String[][])data);
+			return form.getWebRepresentation();
 		}
 		else if (data instanceof JSONObject)
 		{	
-			return (new JsonRepresentation(((JSONObject)data).toString()));
+			return new JsonRepresentation(((JSONObject)data).toString());
 		}
 		else if (data instanceof Document)
 		{
 			// TODO: test this scenario
-			return (new DomRepresentation(MediaType.TEXT_XML, (Document)data));
+			return new DomRepresentation(MediaType.APPLICATION_XML, (Document)data);
 		}
 		else
 		{			
-			return (new EmptyRepresentation());
+			return new EmptyRepresentation();
 		}
 	}
+	*/
+	
+	/*
+	private final Form buildForm(String[][] fields)
+	{
+		ArrayList<Parameter> list = new ArrayList<Parameter>();
+		
+		for (int index=0; index < fields.length; index ++)
+		{
+			if (2 != fields[index].length) continue;
+			list.add(new Parameter(fields[index][0], fields[index][1]));
+		}
+		
+		return new Form(list);
+	}	
+	*/
 			
 	/*
 	*** ResponseHandler
 	 */
 		
+	/*
 	private class ResponseHandler<T> implements Uniform
 	{
 		private AsyncCallback<T> _callback = null;
@@ -187,7 +212,7 @@ public final class RestletRestImpl implements IRestProvider
 			{
 				_callback.onFailure(e);
 				//Log.error(description);
-				GWT.log("internal server error: " + (null != e.getMessage() ? e.getMessage() : e.toString()));
+				Logger.getLogger(this.getClass().getName()).severe("internal server error: " + (null != e.getMessage() ? e.getMessage() : e.toString()));
 			}
 		}	
 		
@@ -221,6 +246,7 @@ public final class RestletRestImpl implements IRestProvider
 			}
 		}	
 	}
+	*/
 	
 	// this is a custom json xss request, using gwt's jsponp hack
 	public void getJsonXss(String url, final AsyncCallback<JSONObject> callback)

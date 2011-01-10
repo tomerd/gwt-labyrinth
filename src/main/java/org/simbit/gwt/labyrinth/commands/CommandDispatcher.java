@@ -19,27 +19,16 @@
 package org.simbit.gwt.labyrinth.commands;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.gen2.logging.shared.Log;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class CommandDispatcher
 {			
 	public static <T> void dispatch(Enum<?> commandId, AsyncCallback<T> callback)
 	{		
-		dispatch(commandId, null, true, callback);	
+		dispatch(commandId, null, callback);	
 	}
-	
-	public static <T> void dispatch(Enum<?> commandId, AsyncCallback<T> callback, boolean setBusy)
-	{		
-		dispatch(commandId, null, setBusy, callback);	
-	}	
-	
+			
 	public static <T> void dispatch(Enum<?> commandId, Object data, AsyncCallback<T> callback)
-	{
-		dispatch(commandId, data, true, callback);
-	}
-	
-	public static <T> void dispatch(Enum<?> commandId, Object data, boolean setBusy, AsyncCallback<T> callback)
 	{
 		try
 		{
@@ -47,11 +36,11 @@ public final class CommandDispatcher
 			ICommandLocator locator = GWT.create(CommandLocator.class);
 			ICommand<T> command = locator.get(commandId);
 			if (null == command) throw (new Exception("command not found or no command is mapped to " + commandId + ", check commands mapping."));
-			command.execute(data, callback, setBusy);			
+			command.execute(data, callback);			
 		}
 		catch (Exception e)
 		{
-			Log.severe("error invoking commnd " + commandId + ", " + e);
+			callback.onFailure(e);
 		}
 	}
 }

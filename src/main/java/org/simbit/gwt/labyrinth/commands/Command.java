@@ -18,53 +18,28 @@
 
 package org.simbit.gwt.labyrinth.commands;
 
-import com.google.gwt.gen2.logging.shared.Log;
-import com.google.gwt.user.client.DOM;
+import java.util.logging.Logger;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.RootPanel;
 
 public abstract class Command <T> implements ICommand<T>, AsyncCallback<T>
 {
 	private AsyncCallback<T> _callback = null;
-	private boolean _setBusy = true;
 		
-	public final void execute(Object data, AsyncCallback<T> callback) 
-	{
-		this.execute(data, callback, true);
-	}
-	
-	public void execute(Object data, AsyncCallback<T> callback, boolean setBusy) 
+	public void execute(Object data, AsyncCallback<T> callback) 
 	{
 		_callback = callback;
-		_setBusy = setBusy;
-		
-		if (_setBusy)
-		{
-			DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "wait");
-		}
 	}
 		
 	public void onSuccess(T result) 
 	{	
-		Log.fine("command " + this.toString() + " returned:\n" + result, "protocol");
-		
-		if (_setBusy)
-		{
-			DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "default");
-		}
-
+		Logger.getLogger(this.getClass().getName()).fine("command " + this.toString() + " returned:\n" + result);
 		if (null != _callback) _callback.onSuccess(result);
 	}
 	
 	public void onFailure(Throwable caught) 
 	{
-		Log.warning("command " + this + " returned: " + caught, "protocol");
-		
-		if (_setBusy)
-		{
-			DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "default");
-		}
-		
+		Logger.getLogger(this.getClass().getName()).warning("command " + this + " returned: " + caught);				
 		if (null != _callback) _callback.onFailure(caught);
 	}
 	
@@ -91,10 +66,5 @@ public abstract class Command <T> implements ICommand<T>, AsyncCallback<T>
 	{
 		String value = this.getStringDataElement(data, name);
 		return (null != value) ? Long.parseLong(value) : Long.MIN_VALUE;
-	}
-	
-	protected final boolean getSetBusy()
-	{
-		return _setBusy;
-	}
+	}	
 }
