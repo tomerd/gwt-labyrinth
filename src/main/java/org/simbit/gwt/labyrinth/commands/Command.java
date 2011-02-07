@@ -45,26 +45,26 @@ public abstract class Command <T> implements ICommand<T>, AsyncCallback<T>
 	
 	protected final Object getDataElement(Object data, String name)
 	{
-		if (!(data instanceof Object[][])) return (null);
+		if (!(data instanceof Object[][])) return null;
 		
 		Object[][] array = (Object[][])data;
 		for (int index=0; index < array.length; index++)
 		{
 			if (2 != array[index].length) continue;
-			if (name == array[index][0]) return (array[index][1]);
+			if (name == array[index][0]) return array[index][1];
 		}
-		return (null);
+		return null;
 	}
 	
 	protected final String getStringDataElement(Object data, String name)
 	{
 		Object value = this.getDataElement(data, name);
-		return (value != null) ? value.toString() : null;
+		return value != null ? value.toString() : null;
 	}
 	
 	protected final Long getLongDataElement(Object data, String name)
 	{
 		String value = this.getStringDataElement(data, name);
-		return (null != value) ? Long.parseLong(value) : Long.MIN_VALUE;
+		return null != value ? Long.parseLong(value) : Long.MIN_VALUE;
 	}	
 }

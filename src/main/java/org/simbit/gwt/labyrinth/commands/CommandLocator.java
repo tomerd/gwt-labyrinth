@@ -23,6 +23,6 @@ public final class CommandLocator implements ICommandLocator
 {		
 	public <T> ICommand<T> get(Enum<?> command)
 	{
-		return (null);
+		return null;
 	}
 }

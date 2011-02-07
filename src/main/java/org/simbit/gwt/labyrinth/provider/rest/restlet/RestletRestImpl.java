@@ -228,16 +228,16 @@ public final class RestletRestImpl implements IRestProvider
 				if (MediaType.APPLICATION_XML.equals(mediaType))
 				{
 					DomRepresentation dom = new DomRepresentation(representation);
-					return (T)dom.getDocument();
+					return T)dom.getDocument();
 				}
 				else if (MediaType.APPLICATION_JSON.equals(mediaType))
 				{
 					JsonRepresentation json = new JsonRepresentation(representation);
-					return (T)json.getJsonObject();
+					return T)json.getJsonObject();
 				}
 				else
 				{
-					return (T)representation.getText();
+					return T)representation.getText();
 				}	
 			}
 			catch (ClassCastException e)
