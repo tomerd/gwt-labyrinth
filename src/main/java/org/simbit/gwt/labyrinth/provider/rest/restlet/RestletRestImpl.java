@@ -35,6 +35,8 @@ import org.restlet.client.representation.Representation;
 import org.restlet.client.representation.StringRepresentation;
 import org.restlet.client.resource.ClientResource;
 */
+import java.util.logging.Logger;
+
 import org.simbit.gwt.labyrinth.provider.rest.HttpMethod;
 import org.simbit.gwt.labyrinth.provider.rest.IRestProvider;
 
@@ -89,6 +91,15 @@ public final class RestletRestImpl implements IRestProvider
 		
 		// common sense defaults
 		if (HttpMethod.UNKNOWN == method) method = (null != data) ? HttpMethod.POST : HttpMethod.GET;
+		
+		if (HttpMethod.GET == method)
+		{
+			Logger.getLogger(this.getClass().getName()).finest("requesting " + url);
+		}
+		else
+		{
+			Logger.getLogger(this.getClass().getName()).finest("posting to " + url + "\n" + data);
+		}
 				
 		ClientResource resource = new ClientResource(url);
 		resource.setOnResponse(new ResponseHandler<T>(callback));

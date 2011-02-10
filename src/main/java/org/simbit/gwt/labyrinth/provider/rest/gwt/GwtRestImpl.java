@@ -62,14 +62,22 @@ public class GwtRestImpl implements IRestProvider
 		
 		// common sense defaults
 		if (HttpMethod.UNKNOWN == method) method = (null != data) ? HttpMethod.POST : HttpMethod.GET;
-				
-		RequestBuilder builder = null;
-				
+								
 		try
-		{
-			builder = new RequestBuilder(getHttpMethod(method), url);
-			if (data instanceof String[][]) builder.setHeader("Content-type", "application/x-www-form-urlencoded"); 
-            builder.setRequestData(formatData(data));           
+		{	
+			if (HttpMethod.GET == method)
+			{
+				Logger.getLogger(this.getClass().getName()).finest("requesting " + url);
+			}
+			else
+			{
+				Logger.getLogger(this.getClass().getName()).finest("posting to " + url + "\n" + data);
+			}
+			
+			RequestBuilder builder = new RequestBuilder(getHttpMethod(method), url);
+			if (data instanceof String[][]) builder.setHeader("Content-type", "application/x-www-form-urlencoded");
+			String formattedData = formatData(data);
+            builder.setRequestData(formattedData);           
 			builder.setCallback(new ResponseHandler<T>(callback));
 			builder.send();
 		}

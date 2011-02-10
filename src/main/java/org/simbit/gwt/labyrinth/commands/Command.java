@@ -33,7 +33,7 @@ public abstract class Command <T> implements ICommand<T>, AsyncCallback<T>
 		
 	public void onSuccess(T result) 
 	{	
-		Logger.getLogger(this.getClass().getName()).fine("command " + this.toString() + " returned:\n" + result);
+		Logger.getLogger(this.getClass().getName()).finest("command " + this.toString() + " returned:\n" + result);
 		if (null != _callback) _callback.onSuccess(result);
 	}
 	
