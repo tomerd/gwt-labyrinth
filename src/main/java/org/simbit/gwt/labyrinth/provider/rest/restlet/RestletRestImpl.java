@@ -34,8 +34,8 @@ import org.restlet.client.representation.EmptyRepresentation;
 import org.restlet.client.representation.Representation;
 import org.restlet.client.representation.StringRepresentation;
 import org.restlet.client.resource.ClientResource;
-*/
 import java.util.logging.Logger;
+*/
 
 import org.simbit.gwt.labyrinth.provider.rest.HttpMethod;
 import org.simbit.gwt.labyrinth.provider.rest.IRestProvider;

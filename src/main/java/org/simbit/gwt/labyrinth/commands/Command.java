@@ -45,6 +45,7 @@ public abstract class Command <T> implements ICommand<T>, AsyncCallback<T>
 	
 	protected final Object getDataElement(Object data, String name)
 	{
+		// FIXME: add support for string array, maps, json and xml
 		if (!(data instanceof Object[][])) return null;
 		
 		Object[][] array = (Object[][])data;

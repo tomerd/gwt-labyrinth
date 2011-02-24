@@ -72,7 +72,7 @@ public abstract class RestService
 	
 	private IRestProvider getProvider()
 	{
-		// the provider locator can be overriden by using gwt dependency injection (aka deferred binding)
+		// the provider locator can be overridden by using gwt dependency injection (aka deferred binding)
 		if (null == _provider) 
 		{
 			IProviderLocator locator = GWT.create(ProviderLocator.class);

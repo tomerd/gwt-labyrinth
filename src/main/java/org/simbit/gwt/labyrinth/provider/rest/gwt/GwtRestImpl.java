@@ -75,7 +75,7 @@ public class GwtRestImpl implements IRestProvider
 			}
 			
 			RequestBuilder builder = new RequestBuilder(getHttpMethod(method), url);
-			if (data instanceof String[][]) builder.setHeader("Content-type", "application/x-www-form-urlencoded");
+			if (isFormData(data)) builder.setHeader("Content-type", "application/x-www-form-urlencoded");
 			String formattedData = formatData(data);
             builder.setRequestData(formattedData);           
 			builder.setCallback(new ResponseHandler<T>(callback));
@@ -100,6 +100,15 @@ public class GwtRestImpl implements IRestProvider
 		}
 	}
 	
+	private Boolean isFormData(Object data)
+	{
+		// TODO: support map, etc
+		if (data instanceof String[][]) return true;
+		if (data instanceof Object[][]) return true;
+		return false;
+		
+	}
+	
 	private String formatData(Object data)
 	{
 		if (data instanceof String)
@@ -111,6 +120,11 @@ public class GwtRestImpl implements IRestProvider
 		{
 			return buildForm((String[][])data);
 		}
+		else if (data instanceof Object[][])
+		{
+			return buildForm((Object[][])data);
+		}
+		// TODO: support map, etc
 		else if (data instanceof JSONObject)
 		{	
 			return ((JSONObject)data).toString();
@@ -126,7 +140,7 @@ public class GwtRestImpl implements IRestProvider
 		}
 	}
 	
-	private final String buildForm(String[][] fields)
+	private final String buildForm(Object[][] fields)
 	{
 		StringBuilder builder = new StringBuilder();
 		
@@ -134,9 +148,9 @@ public class GwtRestImpl implements IRestProvider
 		{
 			if (2 != fields[index].length) continue;
 			if (index > 0) builder.append("&");
-			builder.append(URL.encode(fields[index][0]));
+			builder.append(URL.encode(fields[index][0].toString()));
 			builder.append("=");
-			builder.append(URL.encode(fields[index][1]));
+			builder.append(URL.encode(fields[index][1].toString()));
 		}
 		
 		return builder.toString();
