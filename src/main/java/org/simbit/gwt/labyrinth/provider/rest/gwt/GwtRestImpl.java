@@ -178,13 +178,15 @@ public class GwtRestImpl implements IRestProvider
 				} 
 				else 
 				{
-					_callback.onFailure(new Throwable("server error " +  response.getStatusCode() + ": " + response.getStatusText()));
+					String description = "server error " +  response.getStatusCode() + ": " + response.getStatusText();
+					_callback.onFailure(new Throwable(description));
+					Logger.getLogger(this.getClass().getName()).severe(description);
 				}
 			}
 			catch (Exception e)
 			{
 				_callback.onFailure(e);
-				Logger.getLogger(this.getClass().getName()).severe("internal server error: " + (null != e.getMessage() ? e.getMessage() : e.toString()));
+				Logger.getLogger(this.getClass().getName()).severe("internl error: " + (null != e.getMessage() ? e.getMessage() : e.toString()));
 			}			
 		}
 

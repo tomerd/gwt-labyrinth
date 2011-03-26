@@ -43,6 +43,11 @@ public abstract class Command <T> implements ICommand<T>, AsyncCallback<T>
 		if (null != _callback) _callback.onFailure(caught);
 	}
 	
+	protected final boolean hasDataElement(Object data, String name)
+	{
+		return (null != getDataElement(data, name));
+	}
+	
 	protected final Object getDataElement(Object data, String name)
 	{
 		// FIXME: add support for string array, maps, json and xml

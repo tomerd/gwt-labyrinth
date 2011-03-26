@@ -23,24 +23,59 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public final class CommandDispatcher
 {			
+	public interface IBusyMarker
+	{
+		public void markBusy(boolean busy);
+	}
+	
+	private static IBusyMarker _busyMarker = null;
+	
+	public static void setBusyMarker(IBusyMarker marker)
+	{
+		_busyMarker = marker;	
+	}
+	
 	public static <T> void dispatch(Enum<?> commandId, AsyncCallback<T> callback)
 	{		
 		dispatch(commandId, null, callback);	
 	}
 			
-	public static <T> void dispatch(Enum<?> commandId, Object data, AsyncCallback<T> callback)
+	public static <T> void dispatch(Enum<?> commandId, Object data, final AsyncCallback<T> callback)
 	{
 		try
 		{
 			// CommandLocator is to be overriden using gwt dependency injection (aka deferred binding)
+			// TODO: look into changing this to be based on a compile time generator
 			ICommandLocator locator = GWT.create(CommandLocator.class);
 			ICommand<T> command = locator.get(commandId);
 			if (null == command) throw (new Exception("command not found or no command is mapped to " + commandId + ", check commands mapping."));
-			command.execute(data, callback);			
+			
+			markBusy(true);
+			command.execute(data, new AsyncCallback<T>() 
+			{
+				public void onSuccess(T result) 
+				{
+					markBusy(false);
+					if (null != callback) callback.onSuccess(result);
+				}
+				
+				public void onFailure(Throwable caught) 
+				{
+					markBusy(false);
+					if (null != callback) callback.onFailure(caught);
+				}				
+			});			
 		}
 		catch (Exception e)
 		{
-			callback.onFailure(e);
+			markBusy(false);
+			if (null != callback) callback.onFailure(e);
 		}
+	}
+	
+	private static void markBusy(boolean busy)
+	{
+		if (null == _busyMarker) return;
+		_busyMarker.markBusy(busy);
 	}
 }
