@@ -178,7 +178,7 @@ public class GwtRestImpl implements IRestProvider
 				} 
 				else 
 				{
-					String description = "server error " +  response.getStatusCode() + ": " + response.getStatusText();
+					String description = 0 != response.getStatusCode() ? "server error " + response.getStatusCode() + ": " + response.getStatusText() : "unknown server error";
 					_callback.onFailure(new Throwable(description));
 					Logger.getLogger(this.getClass().getName()).severe(description);
 				}

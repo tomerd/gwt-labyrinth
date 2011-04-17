@@ -63,7 +63,7 @@ public abstract class RestService
 		getProvider().getJsonXss(url, callback);
 	}
 	
-	private String normalizeUrl(String url)
+	protected final String normalizeUrl(String url)
 	{
 		if (null == _baseUrl) return url;
 		if ((_baseUrl.length() > 0) && (url.indexOf(_baseUrl) < 0)) url = _baseUrl + "/" + url;
