@@ -23,40 +23,40 @@ public class GwtRestImpl implements IRestProvider
 {
 	public <T> void get(String url, AsyncCallback<T> callback)
 	{
-		send(url, callback, HttpMethod.GET);
+		send(url, HttpMethod.GET, callback);
 	}
 	
-	public <T> void post(String url, AsyncCallback<T> callback, Object data)
+	public <T> void post(String url, Object data, AsyncCallback<T> callback)
 	{
-		send(url, callback, HttpMethod.POST, data);
+		send(url, HttpMethod.POST, data, callback);
 	}
 	
-	public <T> void put(String url, AsyncCallback<T> callback, Object data)
+	public <T> void put(String url, Object data, AsyncCallback<T> callback)
 	{
-		send(url, callback, HttpMethod.PUT, data);
+		send(url, HttpMethod.PUT, data, callback);
 	}
 
 	public <T> void delete(String url, AsyncCallback<T> callback)
 	{
-		send(url, callback, HttpMethod.DELETE);
+		send(url, HttpMethod.DELETE, callback);
 	}
 	
 	public <T> void send(String url, AsyncCallback<T> callback)
 	{
-		send(url, callback, HttpMethod.UNKNOWN, null);
+		send(url, HttpMethod.UNKNOWN, null, callback);
 	}
 		
-	public <T> void send(String url, AsyncCallback<T> callback, HttpMethod method)
+	public <T> void send(String url, HttpMethod method, AsyncCallback<T> callback)
 	{
-		send(url, callback, method, null);
+		send(url, method, null, callback);
 	}
 	
-	public <T> void send(String url, AsyncCallback<T> callback, Object data)
+	public <T> void send(String url, Object data, AsyncCallback<T> callback)
 	{		
-		send(url, callback, HttpMethod.UNKNOWN, data);	
+		send(url, HttpMethod.UNKNOWN, data, callback);	
 	}	
 		
-	public <T> void send(String url, AsyncCallback<T> callback, HttpMethod method, Object data)
+	public <T> void send(String url, HttpMethod method, Object data, AsyncCallback<T> callback)
 	{								
 		if (null == url) return;
 		

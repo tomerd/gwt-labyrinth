@@ -37,34 +37,60 @@ public abstract class RestService
 	{
 		_baseUrl = baseUrl;
 	}	
-				
+	
 	protected final <T> void get(String url, AsyncCallback<T> callback)
 	{
-		getProvider().get(normalizeUrl(url), callback);
+		get(url, false, callback);
+	}
+	
+	protected final <T> void get(String url, boolean secure, AsyncCallback<T> callback)
+	{
+		getProvider().get(normalizeUrl(url, secure), callback);
 	}
 	
 	protected final <T> void post(String url, Object data, AsyncCallback<T> callback)
 	{
-		getProvider().post(normalizeUrl(url), callback, data);
+		post(url, data, false, callback);
+	}
+	
+	protected final <T> void post(String url, Object data, boolean secure, AsyncCallback<T> callback)
+	{
+		getProvider().post(normalizeUrl(url, secure), data, callback);
 	}
 	
 	protected final <T> void put(String url, Object data, AsyncCallback<T> callback)
 	{
-		getProvider().put(normalizeUrl(url), callback, data);
+		put(url, data, false, callback);
+	}
+	
+	protected final <T> void put(String url, Object data, boolean secure, AsyncCallback<T> callback)
+	{
+		getProvider().put(normalizeUrl(url, secure), data, callback);
 	}
 	
 	protected final <T> void delete(String url, AsyncCallback<T> callback)
 	{
-		getProvider().delete(normalizeUrl(url), callback);
+		delete(url, false, callback);
+	}
+	
+	protected final <T> void delete(String url, boolean secure, AsyncCallback<T> callback)
+	{
+		getProvider().delete(normalizeUrl(url, secure), callback);
 	}
 		
-	protected final void getJsonXss(String url, AsyncCallback<JSONObject> callback)
+	protected final void getJsonXss(String url, boolean secure, AsyncCallback<JSONObject> callback)
 	{
-		getProvider().getJsonXss(url, callback);
+		getProvider().getJsonXss(normalizeUrl(url, secure), callback);
 	}
 	
 	protected final String normalizeUrl(String url)
 	{
+		return normalizeUrl(url, false);
+	}
+	
+	protected final String normalizeUrl(String url, boolean secure)
+	{
+		// FIXME: handle secure (HTTPS) requests here
 		if (null == _baseUrl) return url;
 		if ((_baseUrl.length() > 0) && (url.indexOf(_baseUrl) < 0)) url = _baseUrl + "/" + url;
 		return url;
